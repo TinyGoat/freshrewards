@@ -1,0 +1,40 @@
+@import "compass/css3";
+
+/*---------------------------------------
+  Settings
+    -> @font-face and global variables
+---------------------------------------*/
+
+/* Base colors
+---------------------------------------*/
+$base-background: #fff;
+
+
+/* Base metrics
+---------------------------------------*/
+$base-padding: 40px;
+
+
+/* Base fonts
+---------------------------------------*/
+$base-body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$base-header-font: Helvetica, Arial, sans-serif;
+$base-font-color: #444;
+
+p {
+  font-size: 1rem;
+}
+
+/* Buttons, CTA, etc.
+---------------------------------------*/
+.cta {
+  @include border-radius(10px);
+  border: 3px solid #fff;
+  background: transparent;
+  display: inline-block;
+  padding: $base-padding / 3;
+}
+
+
+
+

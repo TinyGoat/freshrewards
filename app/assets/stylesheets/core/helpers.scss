@@ -1,0 +1,11 @@
+/*---------------------------------------
+  Helpers
+    -> Extends, functions, mixins, keyframe animations
+---------------------------------------*/
+
+@mixin base-font($weight) {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: $weight; //can be number or keyword (e.g. "bold")
+}
+
+

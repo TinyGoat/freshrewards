@@ -1,0 +1,14 @@
+@import "core/settings";
+/*---------------------------------------
+  Content
+    -> Base-level typography (colors, fonts)
+---------------------------------------*/
+
+/* Base fonts
+---------------------------------------*/
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 800;
+  font-family: $base-header-font;
+  color: $base-font-color
+}

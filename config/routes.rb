@@ -1,4 +1,4 @@
 FreshRewards::Application.routes.draw do
+  root "home#index"
   devise_for :users
-  root 'welcome#index'
 end

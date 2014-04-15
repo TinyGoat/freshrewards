@@ -1,0 +1,12 @@
+/*---------------------------------------
+  Base
+    -> Base-level tags
+---------------------------------------*/
+
+@import 'core/all';
+
+body {
+  background: $base-background;
+  font-family: $base-body-font;
+  color: $base-font-color !important;
+}
