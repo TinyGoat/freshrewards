@@ -5,17 +5,18 @@
     -> @font-face and global variables
 ---------------------------------------*/
 
-/* Base colors
+/*---------------------------------------
+  Base colors
 ---------------------------------------*/
 $base-background: #fff;
 
-
-/* Base metrics
+/*---------------------------------------
+  Base metrics
 ---------------------------------------*/
 $base-padding: 40px;
 
-
-/* Base fonts
+/*---------------------------------------
+  Base fonts
 ---------------------------------------*/
 $base-body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $base-header-font: Helvetica, Arial, sans-serif;
@@ -25,7 +26,8 @@ p {
   font-size: 1rem;
 }
 
-/* Buttons, CTA, etc.
+/*---------------------------------------
+  Buttons, CTA, etc.
 ---------------------------------------*/
 .cta {
   @include border-radius(10px);

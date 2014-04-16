@@ -1,3 +1,24 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "/core/*";
+
+/*---------------------------------------
+  Dashboard pods
+---------------------------------------*/
+
+dl#has-rewards {
+  text-align: center;
+  dt.bucks-count {
+    font-size: 4rem;
+    color: $red;
+    line-height: 4rem;
+    margin: 0;
+  }
+  dd.is-subhead {
+    color: $red;
+    font-size: 1.7rem;
+    font-weight: 600;
+  }
+  dd.is-fineprint {
+    color: $red;
+    font-size: .6rem;
+  }
+}

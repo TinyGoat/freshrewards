@@ -1,3 +1,7 @@
+@import "compass/css3";
+@import "core/colorbook";
+@import "core/settings";
+
 /*---------------------------------------
   Helpers
     -> Extends, functions, mixins, keyframe animations
@@ -7,5 +11,30 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: $weight; //can be number or keyword (e.g. "bold")
 }
+
+.button {
+  @include border-radius(8px);
+  padding: $base-padding / 4;
+  h2 {
+    line-height: 2rem;
+    color: #fff;
+  }
+  h4 {
+    font-size: 1.1rem;
+    line-height: 1rem;
+    font-weight: 200;
+    color: #fff;
+  }
+  &.redeem {
+    width: 100%;
+  }
+  &.red {
+    background: $red;
+  }
+  &.black {
+    background: #444;
+  }
+}
+
 
 

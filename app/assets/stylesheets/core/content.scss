@@ -4,11 +4,46 @@
     -> Base-level typography (colors, fonts)
 ---------------------------------------*/
 
-/* Base fonts
+/*---------------------------------------
+  Base fonts
 ---------------------------------------*/
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
   font-family: $base-header-font;
   color: $base-font-color
+}
+
+/*---------------------------------------
+  Paragraphs
+---------------------------------------*/
+
+p {
+  &.centered {
+    text-align: center;
+    font-size: .8rem;
+  }
+  &.small {
+    font-size: .7rem;
+  }
+}
+
+footer p {
+  color: #d7d7d7;
+  line-height: .7rem;
+}
+
+/*---------------------------------------
+  Lists
+---------------------------------------*/
+
+ul.flat {
+  border: 1px solid #fff;
+  overflow: hidden;
+  li {
+    float: left;
+    color: #fff;
+    list-style: none;
+    margin-right: 20px;
+  }
 }

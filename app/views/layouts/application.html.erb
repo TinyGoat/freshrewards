@@ -8,23 +8,19 @@
 </head>
 <body>
 
-<header id="has-logo" class="row">
-  logo
-</header>
-
-<header id="has-navigation" class="row">
-  <ul id="is-navigation">
-    <li>Redeem Now</li>
-    <li>FAQ</li>
-    <li>Contact Us</li>
-    <li>Customer Service</li>
-    <li>Back to MyWeis Account</li>
-  </ul>
-</header>
+<%=render "shared/header" %>
 
 <section class="row">
   <%= yield %>
 </section>
 
+<footer>
+  <div class="row">
+    <p class="centered">
+      Home  |  Redeem Now  |  FAQ  |  Contact Us  |  Customer Service  |  Back to MyWeis Account
+    </p>
+    <p class="small centered">Copyright &copy; 2014 All Rights Reserved Consumer Loyalty Service LLC.</p>
+  </div>
+</footer>
 </body>
 </html>
