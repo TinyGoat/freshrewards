@@ -3,9 +3,6 @@ source 'https://rubygems.org'
 #Use latest version of rails 4
 gem 'rails',                  '~> 4.1.1'
 
-#Spring to load our environments faster
-gem 'spring',                 '~> 1.1.3'
-
 # Use postgresql as the database for Active Record
 gem 'pg',                     '~> 0.17.1'
 
@@ -53,7 +50,13 @@ gem 'foundation-rails',       '~> 5.2.2'
 
 group :development do
   #Don't show me the log message from the asset pipeline in development
-  gem 'quiet_assets',         '~> 1.0.2'
+  gem 'quiet_assets',           '~> 1.0.2'
+
+  #Spring to load our environments faster
+  gem 'spring',                     '~> 1.1.3'
+  gem 'spring-commands-rspec',      '~> 1.0.2'
+  gem 'spring-commands-cucumber',   '~> 1.0.1'
+  gem 'spring-commands-teaspoon',   '~> 0.0.2'
 end
 
 group :production do
