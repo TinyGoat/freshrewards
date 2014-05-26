@@ -75,10 +75,10 @@ group :development, :test do
   gem 'pry',                  '~> 0.9.12'
 
   #Pry remote allows debugging of code not running in main thread of execution
-  gem 'pry-remote',           '~> 0.1.7'
+  gem 'pry-remote',           '~> 0.1.8'
 
   #Pry rails replaces the rails console IRB prompt with Pry
-  gem 'pry-rails',            '~> 0.3.0'
+  gem 'pry-rails',            '~> 0.3.2'
 
   #Pry nav allows for compiled langugage debugger like functionality inside Pry
   gem 'pry-nav',              '~> 0.2.3'
@@ -87,17 +87,17 @@ group :development, :test do
   gem 'awesome_print',        '~> 1.1.0'
 
   # Guard for file monitoring
-  gem 'guard',                '~> 2.2.4'
+  gem 'guard',                '~> 2.6.1'
 
   #Guard bundler to ensure our bundle is always up to date
   gem 'guard-bundler',        '~> 2.0.0'
 
   #Guard livereload to automatically reload the current html view when changes are made
-  gem 'guard-livereload',     '~> 2.0.1'
+  gem 'guard-livereload',     '~> 2.2.0'
 
   #Guard ctags bundler will generate ctags for all the bundled gems automatically when the bundle
   #changes
-  gem 'guard-ctags-bundler',  '~> 1.0.1'
+  gem 'guard-ctags-bundler',  '~> 1.0.2'
 
   #Guard puma to restart puma each any time any of the major application files change
   gem 'guard-puma',           '~> 0.2.4'
