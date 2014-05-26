@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 #Use latest version of rails 4
 gem 'rails',                  '~> 4.1.1'
 
+#Spring to load our environments faster
+gem 'spring',                 '~> 1.1.3'
+
 # Use postgresql as the database for Active Record
 gem 'pg',                     '~> 0.17.1'
 
