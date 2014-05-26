@@ -50,12 +50,11 @@ gem 'foundation-rails',       '~> 5.2.2'
 
 group :development do
   #Don't show me the log message from the asset pipeline in development
-  gem 'quiet_assets',           '~> 1.0.2'
+  gem 'quiet_assets',               '~> 1.0.2'
 
   #Spring to load our environments faster
   gem 'spring',                     '~> 1.1.3'
   gem 'spring-commands-rspec',      '~> 1.0.2'
-  gem 'spring-commands-cucumber',   '~> 1.0.1'
   gem 'spring-commands-teaspoon',   '~> 0.0.2'
 end
 
@@ -106,20 +105,17 @@ end
 
 group :test do
   #DatabaseCleaner to make sure the database is ready in between tests
-  gem 'database_cleaner',     '~> 1.0.1'
+  gem 'database_cleaner',     '~> 1.3.0'
 
   #Rspec for testing instead of test::unit
-  gem 'rspec-rails',          '~> 2.14.1'
+  gem 'rspec-rails',          '~> 2.14.2'
 
-  #Cucumber for integration testing
-  gem 'cucumber-rails',       '~> 1.4.0', require: false
+  #Capybara for acceptance testing
+  gem 'capybara',             '~> 2.2.1'
 
-  #Poltergeist is a PhantomJS driver for Cucumber to run features that are JS intensitve
+  #Poltergeist is a PhantomJS driver for Capybara to run features that are JS intensitve
   gem 'poltergeist',          '~> 1.5.0'
 
   #Launchy for opening up pages for inspection during automated testing
   gem 'launchy',              '~> 2.3.0'
-
-  #Selenium web driver for the automated tests that poltergeist can't handle
-  gem 'selenium-webdriver',   '~> 2.39.0'
 end
