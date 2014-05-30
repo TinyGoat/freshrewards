@@ -1,0 +1,3 @@
+BuyerID,UserID,Password,FirstName,MiddleName,LastName,Address,City,State,ZipCode,PhoneNumber,Email,ProgramID,InitialDCash,NewMember,Gcstatus
+1|11|Rewards|John|Joseph|Doe|123 Test St.|Cranston|Rhode Island|02920|4015781958|john@example.com|111|100|1
+2|22|Rewards|Jane|Mary|Doe|125 Test Ave.|Warwick|Rhode Island|02886|4019460376|jane@example.com|111|75|1
