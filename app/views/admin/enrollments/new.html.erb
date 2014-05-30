@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FreshRewards</title>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <%= show_flashes %>
+
+    <section class="row">
+      <h1> Please specify an enrollment file you wish to process</h1>
+
+      <%= form_tag admin_enrollment_path, multipart: true  do %>
+
+        <%= label_tag       'enrollment_file', 'Enrollment CSV' %>
+        <%= file_field_tag  'enrollment_file' %>
+
+        <%= submit_tag 'Upload enrollment' %>
+      <% end %>
+    </section>
+  </body>
+</html>
+
