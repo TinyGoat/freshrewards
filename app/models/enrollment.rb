@@ -33,7 +33,13 @@ class Enrollment
 
   def process!
     customers_attributes.each do |customer_attributes|
-      Customer.create customer_attributes.except(:new_member)
+      customer = Customer.where(id: customer_attributes[:id]).first
+
+      if customer
+        customer.update customer_attributes.except(:new_member, :id)
+      else
+        Customer.create customer_attributes.except(:new_member)
+      end
     end
   end
 
