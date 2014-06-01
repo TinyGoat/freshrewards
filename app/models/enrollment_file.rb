@@ -1,6 +1,6 @@
 require 'csv'
 
-CSV::HeaderConverters[:weis_header] = lambda do |header|
+CSV::HeaderConverters[:enrollment_header] = lambda do |header|
   case header
   when 'InitialDCash'
     :balance
@@ -17,18 +17,18 @@ CSV::HeaderConverters[:weis_header] = lambda do |header|
   end
 end
 
-class Enrollment
+class EnrollmentFile
 
   def initialize(raw_csv_file)
     @raw_csv_file = raw_csv_file
 
     @csv_file = ::CSV.open(@raw_csv_file, 'r',  headers:            true,
                                                 converters:         :all,
-                                                header_converters:  :weis_header)
+                                                header_converters:  :enrollment_header)
   end
 
   def self.process!(raw_csv_file)
-    Enrollment.new(raw_csv_file).process!
+    self.new(raw_csv_file).process!
   end
 
   def process!

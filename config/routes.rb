@@ -4,6 +4,7 @@ FreshRewards::Application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resource :enrollment, only: [:new, :create]
+    resource :enrollment,   only: [:new, :create]
+    resource :transaction,  only: [:new, :create]
   end
 end
