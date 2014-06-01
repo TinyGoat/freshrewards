@@ -14,19 +14,34 @@ end
 class TransactionFile
 
   def initialize(csv_file)
-    @raw_csv_file = csv_file
+    @raw_csv_file        = csv_file
+    @failed_transactions = []
 
     @csv_file = ::CSV.open(@raw_csv_file, 'r',  headers:            true,
                                                 converters:         :all,
                                                 header_converters:  :transaction_header)
   end
 
+  attr_reader :failed_transactions
+
   def self.process!(csv_file)
     self.new(csv_file).process!
   end
 
   def process!
-    transactions_data.each { |transaction_data| Transaction.process! transaction_data }
+    transactions_data.each do |transaction_data|
+      begin
+        Transaction.process! transaction_data
+      rescue Transaction::CustomerNotFound
+        failed_transactions << FailedTransaction.new(transaction_data)
+      end
+    end
+
+    self
+  end
+
+  def successful?
+    failed_transactions.empty?
   end
 
   private

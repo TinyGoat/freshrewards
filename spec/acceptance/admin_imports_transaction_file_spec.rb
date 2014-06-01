@@ -15,6 +15,12 @@ feature 'Administrator imports transaction file', %q{
     confirm_customer_balances_were_updated
   end
 
+  scenario 'Administrator imports file containing customers not in the system' do
+    upload_new_transaction_file
+
+    confirm_error_page_rendered
+  end
+
   def create_existing_customers
     Customer.create(id: 1, email_address: 'john@example.com', password: 'Rewards', balance: 15)
     Customer.create(id: 2, email_address: 'jane@example.com', password: 'Rewards', balance: 25)
@@ -39,6 +45,12 @@ feature 'Administrator imports transaction file', %q{
   def confirm_customer_balances_were_updated
     expect(Customer.find(1).balance).to eql 115
     expect(Customer.find(2).balance).to eql 225
+  end
+
+  def confirm_error_page_rendered
+    expect(page).to have_text 'Not all customers in the transaction file were found in the system'
+
+    expect(page).to have_css '.failed-transaction', count: 2
   end
 end
 

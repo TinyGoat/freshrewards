@@ -22,6 +22,12 @@ class Transaction
   end
 
   def customer
-    @customer ||= Customer.find(@transaction_attributes[:user_id])
+    @customer ||= begin
+                    Customer.find(@transaction_attributes[:user_id])
+                  rescue ActiveRecord::RecordNotFound
+                    raise CustomerNotFound
+                  end
   end
+
+  class CustomerNotFound < ActiveRecord::RecordNotFound; end
 end

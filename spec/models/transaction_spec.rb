@@ -43,6 +43,14 @@ describe Transaction do
       transaction.process!
     end
 
+    context 'when a Customer associated with that id can not be found' do
+      before { Customer.stub(:find).and_raise ActiveRecord::RecordNotFound }
+
+      it 'raises a Transaction::CustomerNotFound exception' do
+        expect{transaction.process!}.to raise_error Transaction::CustomerNotFound
+      end
+    end
+
     context 'when the deposit amount is 0 or greater' do
       before { transaction.stub(:deposit_amount).and_return 1 }
 

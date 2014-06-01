@@ -27,6 +27,7 @@ describe TransactionFile do
   end
 
   describe '#process!' do
+    let(:transaction_file) { TransactionFile.new(transaction_csv) }
 
     it 'creates a new Transaction for each line of the TransactionFile' do
       Transaction.stub(:process!)
@@ -43,7 +44,51 @@ describe TransactionFile do
                                                            user_id:         2,
                                                            deposit_amount:  200,
                                                            description:     'Bought some big items' )
-      TransactionFile.process! transaction_csv
+      transaction_file.process!
+    end
+
+    context 'when one of the transactions in the file references a customer that does not exist '\
+            'in the system' do
+
+      before { Transaction.stub(:process!).and_raise Transaction::CustomerNotFound }
+
+      it 'creates a failed transaction' do
+
+        expect(FailedTransaction).to receive(:new).once.with(buyer_id:        1,
+                                                             program_id:      1,
+                                                             user_id:         1,
+                                                             deposit_amount:  100,
+                                                             description:     'Bought some cool stuff' )
+
+        expect(FailedTransaction).to receive(:new).once.with(buyer_id:        2,
+                                                             program_id:      1,
+                                                             user_id:         2,
+                                                             deposit_amount:  200,
+                                                             description:     'Bought some big items' )
+        transaction_file.process!
+      end
+
+      it 'stores the failed transaction in its failed transactions collection' do
+        transaction_file.process!
+
+        expect(transaction_file.failed_transactions.size).to eql 2
+      end
+    end
+  end
+
+  describe '#successful?' do
+    let(:transaction_file) { TransactionFile.new(transaction_csv) }
+
+    it 'returns true if the transaction file has no failed transactions' do
+      transaction_file.stub(:failed_transactions).and_return []
+
+      expect(transaction_file).to be_successful
+    end
+
+    it 'returns false if the transaction file has some failed transactions' do
+      transaction_file.stub(:failed_transactions).and_return [FailedTransaction.new({})]
+
+      expect(transaction_file).to_not be_successful
     end
   end
 end

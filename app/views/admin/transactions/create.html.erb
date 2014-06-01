@@ -1,0 +1,17 @@
+<h1>Not all customers in the transaction file were found in the system</h1>
+
+<table>
+  <tr>
+    <th>BuyerID</th>
+    <th>ProgramID</th>
+    <th>UserID</th>
+    <th>RewardsCash</th>
+    <th>TXN Description</th>
+    <th>Failure Reason</th>
+  </tr>
+  <tbody>
+    <%= render @failed_transactions %>
+  </tbody>
+</table>
+
+
