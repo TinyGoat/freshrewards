@@ -27,7 +27,7 @@ feature 'Administrator imports transaction file', %q{
   end
 
   def upload_new_transaction_file
-    visit       'admin/transaction/new'
+    visit       '/admin/transaction/new'
     attach_file 'Transaction CSV', Rails.root + 'spec/support/fixtures/transaction.csv'
     click_on    'Upload transaction'
   end
