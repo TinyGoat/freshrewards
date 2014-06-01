@@ -13,14 +13,14 @@ describe Admin::EnrollmentsController do
     let(:file_upload)   { ActionDispatch::Http::UploadedFile.new(filename: 'enrollment.csv',
                                                                  type:     'text/csv',
                                                                  tempfile:  csv_file)}
-    it 'processes a new Enrollment' do
-      expect(Enrollment).to receive(:process!).with csv_file
+    it 'processes a new EnrollmentFile' do
+      expect(EnrollmentFile).to receive(:process!).with csv_file
 
       post :create, enrollment_file: file_upload
     end
 
     it 'redirects to the new enrollment form' do
-      Enrollment.stub(:process!).and_return true
+      EnrollmentFile.stub(:process!).and_return true
 
       post :create, enrollment_file: file_upload
 

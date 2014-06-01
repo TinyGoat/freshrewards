@@ -1,35 +1,35 @@
 require 'spec_helper'
 
-describe Enrollment do
+describe EnrollmentFile do
   let(:customer_csv) { File.open Rails.root + 'spec/support/fixtures/enrollment.csv' }
 
   it 'requires a CSV file' do
-    expect{Enrollment.new}.to raise_error
-    expect{Enrollment.new(customer_csv)}.to_not raise_error
+    expect{EnrollmentFile.new}.to raise_error
+    expect{EnrollmentFile.new(customer_csv)}.to_not raise_error
   end
 
   describe 'self.process!' do
     let(:enrollment) { double(process!: true) }
 
-    before { Enrollment.stub(:new).and_return enrollment }
+    before { EnrollmentFile.stub(:new).and_return enrollment }
 
-    it 'creates a new Enrollment with the specificied CSV file' do
-      expect(Enrollment).to receive(:new).with(customer_csv)
+    it 'creates a new EnrollmentFile with the specificied CSV file' do
+      expect(EnrollmentFile).to receive(:new).with(customer_csv)
 
-      Enrollment.process! customer_csv
+      EnrollmentFile.process! customer_csv
     end
 
-    it 'called process! on the newly created Enrollment' do
+    it 'called process! on the newly created EnrollmentFile' do
       expect(enrollment).to receive(:process!)
 
-      Enrollment.process! customer_csv
+      EnrollmentFile.process! customer_csv
     end
   end
 
   describe '#process!' do
     context 'when a customer in the CSV does not already exist' do
-      it 'creates a new user for each line of the CSV file that was passed in to the Enrollment' do
-        enrollment  = Enrollment.new customer_csv
+      it 'creates a new user for each line of the CSV file that was passed in to the EnrollmentFile' do
+        enrollment  = EnrollmentFile.new customer_csv
 
         expect(Customer).to receive(:create).once.with  id:                      11,
                                                         password:               'Rewards',
@@ -61,7 +61,7 @@ describe Enrollment do
                                                         email_address:          'jane@example.com',
                                                         program_id:              111,
                                                         balance:                 75,
-                                                        gold_member:             1
+                                                        gold_member:             0
 
         enrollment.process!
       end
@@ -81,7 +81,7 @@ describe Enrollment do
       end
 
       it 'updates the existing customer with any new information' do
-        enrollment  = Enrollment.new customer_csv
+        enrollment  = EnrollmentFile.new customer_csv
 
         expect(Customer).to receive(:create).with id:              11,
                                                   password:       'Rewards',
@@ -112,7 +112,7 @@ describe Enrollment do
                                                   email_address: 'jane@example.com',
                                                   program_id:     111,
                                                   balance:        75,
-                                                  gold_member:    1
+                                                  gold_member:    0
 
         enrollment.process!
       end

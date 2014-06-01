@@ -6,7 +6,7 @@ class Admin::EnrollmentsController < ActionController::Base
   end
 
   def create
-    Enrollment.process! params[:enrollment_file].tempfile
+    EnrollmentFile.process! params[:enrollment_file].tempfile
 
     redirect_to new_admin_enrollment_path, notice: 'You enrollment file was processed successfully'
   end
