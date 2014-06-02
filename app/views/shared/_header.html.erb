@@ -7,8 +7,8 @@
 
   <div class="large-6 medium-6 small-6 columns">
     <dl class="has-login">
-      <dt>Welcome back, John | Log Out</dt>
-      <dt class="gold">Available Gold Card Bucks: 745</dt>
+      <dt>Welcome back, <%= current_customer.first_name %> | <%= link_to 'Log Out', '#' %></dt>
+      <dt class="gold">Available Gold Card Bucks: <%= current_customer.balance %></dt>
     </dl>
   </div>
 </header>

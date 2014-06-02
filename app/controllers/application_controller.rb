@@ -6,4 +6,6 @@ class ApplicationController < ActionController::Base
   def current_customer
     Customer.first
   end
+
+  helper_method :current_customer
 end
