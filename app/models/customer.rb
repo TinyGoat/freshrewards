@@ -8,6 +8,14 @@ class Customer < ActiveRecord::Base
     end
   end
 
+  def reward_earned!
+    #ActiveRecord's cache messes up just a normal push to a PG array, we need to tell it
+    #to invalidate its cached version of rewards manually
+    rewards_will_change!
+
+    update_attributes rewards: rewards.push(Date.today)
+  end
+
   class DepositMustBeGreaterThanZero < StandardError
     def initialize(amount)
       @amount = amount
