@@ -1,8 +1,7 @@
-class Admin::EnrollmentsController < ActionController::Base
-  layout false
+class Admin::EnrollmentsController < ApplicationController
+  layout 'admin'
 
   def new
-
   end
 
   def create

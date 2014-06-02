@@ -48,7 +48,7 @@ feature 'Administrator imports transaction file', %q{
   end
 
   def confirm_error_page_rendered
-    expect(page).to have_text 'Not all customers in the transaction file were found in the system'
+    expect(page).to have_text 'Not all customers in the file were found'
 
     expect(page).to have_css '.failed-transaction', count: 2
   end

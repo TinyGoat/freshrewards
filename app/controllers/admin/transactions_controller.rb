@@ -1,4 +1,5 @@
-class Admin::TransactionsController < ActionController::Base
+class Admin::TransactionsController < ApplicationController
+  layout 'admin'
 
   def new
 

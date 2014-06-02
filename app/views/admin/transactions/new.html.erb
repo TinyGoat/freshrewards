@@ -1,27 +1,14 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>FreshRewards</title>
-    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-    <%= csrf_meta_tags %>
-  </head>
+<div class="large-8 medium-8 small-16 large-offset-2 medium-offset-2 small-offset-4 columns bordered">
+  <%= show_flashes %>
 
-  <body>
-    <%= show_flashes %>
+  <h1 class="pod-header"> Add a new transaction file</h1>
 
-    <section class="row">
-      <h1> Please specify an enrollment file you wish to process</h1>
+  <%= form_tag admin_transaction_path, multipart: true  do %>
 
-      <%= form_tag admin_transaction_path, multipart: true  do %>
+    <%= label_tag       'transaction_file', 'Transaction CSV' %>
+    <%= file_field_tag  'transaction_file' %>
 
-        <%= label_tag       'transaction_file', 'Transaction CSV' %>
-        <%= file_field_tag  'transaction_file' %>
-
-        <%= submit_tag 'Upload transaction' %>
-      <% end %>
-    </section>
-  </body>
-</html>
-
+    <%= submit_tag 'Upload transaction', class: "button redeem red" %>
+  <% end %>
+</div>
 

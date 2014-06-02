@@ -1,17 +1,18 @@
-<h1>Not all customers in the transaction file were found in the system</h1>
+<div class="large-8 medium-8 small-16 large-offset-2 medium-offset-2 small-offset-4 columns bordered">
+  <h1>Not all customers in the file were found</h1>
 
-<table>
-  <tr>
-    <th>BuyerID</th>
-    <th>ProgramID</th>
-    <th>UserID</th>
-    <th>RewardsCash</th>
-    <th>TXN Description</th>
-    <th>Failure Reason</th>
-  </tr>
-  <tbody>
-    <%= render @failed_transactions %>
-  </tbody>
-</table>
-
+  <table class="generic">
+    <tr>
+      <th>BuyerID</th>
+      <th>ProgramID</th>
+      <th>UserID</th>
+      <th>RewardsCash</th>
+      <th>TXN Description</th>
+      <th>Failure Reason</th>
+    </tr>
+    <tbody>
+      <%= render @failed_transactions %>
+    </tbody>
+  </table>
+</div>
 
