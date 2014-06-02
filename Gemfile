@@ -118,4 +118,7 @@ group :test do
 
   #Launchy for opening up pages for inspection during automated testing
   gem 'launchy',              '~> 2.3.0'
+
+  #Timecop for easy manipulation of Time when testing
+  gem 'timecop',              '~> 0.7.1'
 end

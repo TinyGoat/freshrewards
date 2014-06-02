@@ -27,5 +27,16 @@ describe Customer do
       end
     end
   end
+
+  describe '#reward_earned!' do
+
+    it "adds today's date to the array of rewards for a customer" do
+      customer = Customer.create balance: 10, rewards: [ Date.yesterday, 1.month.ago.to_date ]
+
+      customer.reward_earned!
+
+      expect(customer.rewards).to eql [ Date.yesterday, 1.month.ago.to_date, Date.today]
+    end
+  end
 end
 

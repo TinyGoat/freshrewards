@@ -1,7 +1,10 @@
 FreshRewards::Application.routes.draw do
-  root "home#index"
+  root "profiles#show"
   get "home/faqs"
+
   devise_for :users
+
+  resource :profile, only: :show
 
   namespace :admin do
     resource :enrollment,   only: [:new, :create]
