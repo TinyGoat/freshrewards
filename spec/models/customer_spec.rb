@@ -38,5 +38,34 @@ describe Customer do
       expect(customer.rewards).to eql [ Date.yesterday, 1.month.ago.to_date, Date.today]
     end
   end
+
+  describe '#destination_rewards_link_params' do
+    it 'returns a hash of the attributes used for destination rewards link URL' do
+
+      customer = Customer.create( first_name:     'Test',
+                                  last_name:      'Man',
+                                  program_id:     '1',
+                                  buyer_id:       '1',
+                                  street:         '123 Test St.',
+                                  city:           'Example',
+                                  state:          'RI',
+                                  zip_code:       '02920',
+                                  email_address:  'testman@example.com')
+
+
+      expect(customer.destination_rewards_link_params).to eql({
+                                                                pi:         1,
+                                                                user:       1,
+                                                                firstname:  'Test',
+                                                                lastname:   'Man',
+                                                                address:    '123 Test St.',
+                                                                city:       'Example',
+                                                                state:      'RI',
+                                                                country:    'US',
+                                                                zip:        '02920',
+                                                                email:      'testman@example.com'
+                                                             })
+    end
+  end
 end
 

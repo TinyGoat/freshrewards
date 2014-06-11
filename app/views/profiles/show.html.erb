@@ -11,13 +11,15 @@
 
 <div class="large-6 medium-6 small-12 columns bordered">
   <h1 class="pod-header"><span class="red">Rewards</span>Available</h1>
-  <div class="button redeem red">
+
+  <%= link_to destination_rewards_path, class:"button redeem red" do %>
     <h2>Redeem Now</h2>
     <h4>You have <%= @profile.rewards_count %> rewards available.</h4>
-  </div>
-  <div class="button redeem black">
+  <% end %>
+
+  <%= link_to destination_rewards_path, class:"button redeem black" do %>
     <h4>View Rewards Catalog</h4>
-  </div>
+  <% end %>
 </div>
 
 <div class="large-6 medium-6 small-12 columns bordered" id='profile'>

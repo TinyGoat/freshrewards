@@ -16,6 +16,21 @@ class Customer < ActiveRecord::Base
     update_attributes rewards: rewards.push(Date.today)
   end
 
+  def destination_rewards_link_params
+    {
+      pi:         program_id,
+      user:       buyer_id,
+      firstname:  first_name,
+      lastname:   last_name,
+      address:    street,
+      city:       city,
+      state:      state,
+      country:    'US',
+      zip:        zip_code,
+      email:      email_address
+    }
+  end
+
   class DepositMustBeGreaterThanZero < StandardError
     def initialize(amount)
       @amount = amount

@@ -48,6 +48,9 @@ gem 'compass-rails',          '~> 1.1.7'
 # ZURB foundation for easy styling of the application
 gem 'foundation-rails',       '~> 5.2.2'
 
+# Addressable is an easy way to encode URLs
+gem 'addressable',            '~> 2.3.6'
+
 group :development do
   #Don't show me the log message from the asset pipeline in development
   gem 'quiet_assets',               '~> 1.0.2'
