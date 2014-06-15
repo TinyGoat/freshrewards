@@ -59,6 +59,9 @@ ul#is-navigation {
     padding: 0;
     margin: 0 $base-padding 0 0;
     line-height: 37px;
+    a {
+      color: #fff;
+    }
   }
 }
 
