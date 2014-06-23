@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe EnrollmentFile do
-  let(:customer_csv) { File.open Rails.root + 'spec/support/fixtures/enrollment.csv' }
+  let(:enrollment_csv) { File.open Rails.root + 'spec/support/fixtures/enrollment.csv' }
 
   it 'requires a CSV file' do
     expect{EnrollmentFile.new}.to raise_error
-    expect{EnrollmentFile.new(customer_csv)}.to_not raise_error
+    expect{EnrollmentFile.new(enrollment_csv)}.to_not raise_error
   end
 
   describe 'self.process!' do
@@ -14,22 +14,26 @@ describe EnrollmentFile do
     before { EnrollmentFile.stub(:new).and_return enrollment }
 
     it 'creates a new EnrollmentFile with the specificied CSV file' do
-      expect(EnrollmentFile).to receive(:new).with(customer_csv)
+      expect(EnrollmentFile).to receive(:new).with(enrollment_csv)
 
-      EnrollmentFile.process! customer_csv
+      EnrollmentFile.process! enrollment_csv
     end
 
     it 'called process! on the newly created EnrollmentFile' do
       expect(enrollment).to receive(:process!)
 
-      EnrollmentFile.process! customer_csv
+      EnrollmentFile.process! enrollment_csv
     end
   end
 
   describe '#process!' do
+    let(:uploader)    { DestinationRewards::RemoteFolder.instance }
+
+    before { uploader.stub(:upload!) }
+
     context 'when a customer in the CSV does not already exist' do
       it 'creates a new user for each line of the CSV file that was passed in to the EnrollmentFile' do
-        enrollment  = EnrollmentFile.new customer_csv
+        enrollment  = EnrollmentFile.new enrollment_csv
 
         expect(Customer).to receive(:create).once.with  id:                      11,
                                                         password:               'Rewards',
@@ -81,7 +85,7 @@ describe EnrollmentFile do
       end
 
       it 'updates the existing customer with any new information' do
-        enrollment  = EnrollmentFile.new customer_csv
+        enrollment  = EnrollmentFile.new enrollment_csv
 
         expect(Customer).to receive(:create).with id:              11,
                                                   password:       'Rewards',
@@ -116,6 +120,38 @@ describe EnrollmentFile do
 
         enrollment.process!
       end
+    end
+
+    it 'uploads the file to Destination Rewards SFTP folder' do
+
+      Date.stub(:today).and_return Date.new(2014,05,14)
+
+      enrollment  = EnrollmentFile.new enrollment_csv
+
+      expect(uploader).to receive(:upload!).with enrollment.send(:as_upload),
+                                                 '/Weis_Enrollment_05142014.csv'
+
+      enrollment.process!
+    end
+  end
+
+  describe '#as_upload' do
+    let(:enrollment_file) { EnrollmentFile.new(enrollment_csv) }
+
+    it 'removes the last two columns from the original CSV file' do
+      expect(enrollment_file.send(:as_upload).read.headers).to_not include 'Gcstatus', 'NewMember'
+    end
+
+    it 'converts the headers to camelcase' do
+      expect(enrollment_file.send(:as_upload).read.headers).to include("BuyerId", "UserID", "Password",
+                                                                "FirstName", "MiddleName", "LastName",
+                                                                "Address", "City", "State", "ZipCode",
+                                                                "PhoneNumber", "Email", "ProgramID",
+                                                                "InitialDCash")
+    end
+
+    it 'returns the new CSV file' do
+      expect(enrollment_file.send(:as_upload)).to be_an_instance_of CSV
     end
   end
 end

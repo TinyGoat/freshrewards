@@ -11,15 +11,32 @@ CSV::HeaderConverters[:transaction_header] = lambda do |header|
   end
 end
 
+CSV::HeaderConverters[:transaction_upload_header] = lambda do |header|
+  case header
+  when 'deposit_amount'
+    'RewardsCash'
+  when 'description'
+    'TXN Description'
+  when 'program_id'
+    'ProgramID'
+  when 'buyer_id'
+    'BuyerID'
+  when 'user_id'
+    'UserID'
+  else
+    header.camelize
+  end
+end
+
 class TransactionFile
 
   def initialize(csv_file)
     @raw_csv_file        = csv_file
     @failed_transactions = []
 
-    @csv_file = ::CSV.open(@raw_csv_file, 'r',  headers:            true,
-                                                converters:         :all,
-                                                header_converters:  :transaction_header)
+    @csv_file = ::CSV.read(@raw_csv_file, headers:            true,
+                                          converters:         :all,
+                                          header_converters:  :transaction_header)
   end
 
   attr_reader :failed_transactions
@@ -29,13 +46,9 @@ class TransactionFile
   end
 
   def process!
-    transactions_data.each do |transaction_data|
-      begin
-        Transaction.process! transaction_data
-      rescue Transaction::CustomerNotFound
-        failed_transactions << FailedTransaction.new(transaction_data)
-      end
-    end
+    process_transactions_in_file
+
+    upload_file_to_destination_rewards
 
     self
   end
@@ -46,7 +59,36 @@ class TransactionFile
 
   private
 
+  def process_transactions_in_file
+    transactions_data.each do |transaction_data|
+      begin
+        Transaction.process! transaction_data
+      rescue Transaction::CustomerNotFound
+        failed_transactions << FailedTransaction.new(transaction_data)
+      end
+    end
+  end
+
+  def upload_file_to_destination_rewards
+    remote_folder.upload!(as_upload, upload_path)
+  end
+
+  def remote_folder
+    DestinationRewards::RemoteFolder.instance
+  end
+
+  def as_upload
+    upload_csv = @csv_file
+
+    @upload_csv ||= CSV.new(upload_csv.to_csv, headers: true,
+                                               header_converters: :transaction_upload_header)
+  end
+
+  def upload_path
+    "/Weis_Transaction_#{Date.today.strftime('%m%d%Y')}.csv"
+  end
+
   def transactions_data
-    @csv_file.to_a.map { |transaction_row| transaction_row.to_hash }
+    @csv_file.map { |row| row.to_hash }
   end
 end

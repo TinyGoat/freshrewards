@@ -1,14 +1,13 @@
 require 'spec_helper'
 
 describe Customer do
+  let(:customer) {Customer.create balance: 10}
 
   it 'is valid with valid attributes' do
     expect(Customer.new).to be_valid
   end
 
   describe '#deposit' do
-    let(:customer) {Customer.create balance: 10}
-
     context 'if the amount is more than zero' do
       let(:deposit_amount) { 15 }
 

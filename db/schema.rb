@@ -11,28 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140602001355) do
+ActiveRecord::Schema.define(version: 20140622181834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "customers", force: true do |t|
-    t.string  "first_name"
-    t.string  "middle_name"
-    t.string  "last_name"
-    t.string  "email_address"
-    t.string  "password"
-    t.string  "street"
-    t.string  "city"
-    t.string  "state"
-    t.string  "zip_code"
-    t.string  "phone_number"
-    t.integer "balance"
-    t.boolean "gold_member"
-    t.integer "program_id"
-    t.integer "buyer_id"
-    t.date    "rewards",       default: [], array: true
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.string   "email_address"
+    t.string   "password"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
+    t.string   "phone_number"
+    t.integer  "balance"
+    t.boolean  "gold_member"
+    t.integer  "program_id"
+    t.integer  "buyer_id"
+    t.date     "rewards",        default: [], array: true
+    t.datetime "deactivated_at"
   end
+
+  add_index "customers", ["deactivated_at"], name: "index_customers_on_deactivated_at", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

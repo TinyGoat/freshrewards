@@ -1,4 +1,9 @@
 class Customer < ActiveRecord::Base
+  acts_as_paranoid column: :deactivated_at
+
+  alias :deactivated? :destroyed?
+  alias :deactivate!  :destroy!
+  alias :activate!    :restore!
 
   def deposit!(amount)
     if amount > 0
