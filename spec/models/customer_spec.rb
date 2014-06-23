@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Customer do
-  let(:customer) {Customer.create balance: 10}
+  let(:customer) {Customer.create balance: 160}
 
   it 'is valid with valid attributes' do
     expect(Customer.new).to be_valid
@@ -14,7 +14,7 @@ describe Customer do
       it "increases the customer's balance by the specified amount" do
         customer.deposit! deposit_amount
 
-        expect(customer.balance).to eql 25
+        expect(customer.balance).to eql 175
       end
     end
 
@@ -24,6 +24,35 @@ describe Customer do
       it 'raises an Customer::DepositMustBeGreatThanZero exception' do
         expect{customer.deposit!(deposit_amount)}.to raise_error Customer::DepositMustBeGreaterThanZero
       end
+    end
+  end
+
+  describe '#calculate_rewards!' do
+
+    context 'when the customer is a gold member' do
+      before { customer.stub(:gold_member?).and_return true }
+
+      it 'earns a reward for every 25 bucks they have on their balance' do
+        expect(customer).to receive(:reward_earned!).exactly(6).times
+
+        customer.calculate_rewards!
+      end
+    end
+
+    context 'when the customer is a silver member' do
+      before { customer.stub(:gold_member?).and_return false }
+
+      it 'earns a reward for every 50 bucks they have on their balance' do
+        expect(customer).to receive(:reward_earned!).exactly(3).times
+
+        customer.calculate_rewards!
+      end
+    end
+
+    it 'updates the balance, removing the amount equal to the number of rewards received' do
+      customer.calculate_rewards!
+
+      expect(customer.balance).to eql 10
     end
   end
 

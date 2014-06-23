@@ -8,7 +8,12 @@ class Transaction
   end
 
   def process!
-    should_deactivate_customer? ? customer.deactive! : customer.deposit!(deposit_amount)
+    if should_deactivate_customer?
+      customer.deactive!
+    else
+      customer.deposit!(deposit_amount)
+      customer.calculate_rewards!
+    end
   end
 
   private

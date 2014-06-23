@@ -37,7 +37,7 @@ feature 'Administrator imports enrollment file', %q{
                                                                    phone_number:   '4015781958',
                                                                    email_address:  'john@example.com',
                                                                    gold_member:     true,
-                                                                   balance:         100
+                                                                   balance:         0
 
     expect(Customer.find(22)
                    .attributes.with_indifferent_access).to include first_name:     'Jane',
@@ -50,7 +50,7 @@ feature 'Administrator imports enrollment file', %q{
                                                                    phone_number:   '4019460376',
                                                                    email_address:  'jane@example.com',
                                                                    gold_member:     false,
-                                                                   balance:         75
+                                                                   balance:         25
 
   end
 end

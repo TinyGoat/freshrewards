@@ -13,6 +13,14 @@ class Customer < ActiveRecord::Base
     end
   end
 
+  def calculate_rewards!
+    number_of_rewards_earned = balance/reward_threshold
+
+    number_of_rewards_earned.times { reward_earned! }
+
+    update_attribute(:balance, balance%reward_threshold)
+  end
+
   def reward_earned!
     #ActiveRecord's cache messes up just a normal push to a PG array, we need to tell it
     #to invalidate its cached version of rewards manually
@@ -34,6 +42,12 @@ class Customer < ActiveRecord::Base
       zip:        zip_code,
       email:      email_address
     }
+  end
+
+  private
+
+  def reward_threshold
+    gold_member? ? 25 : 50
   end
 
   class DepositMustBeGreaterThanZero < StandardError

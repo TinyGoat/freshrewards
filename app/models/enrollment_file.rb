@@ -58,13 +58,11 @@ class EnrollmentFile
 
   def process_customers_in_file
     customers_attributes.each do |customer_attributes|
-      customer = Customer.where(id: customer_attributes[:id]).first
+      customer = Customer.find_or_create_by(id: customer_attributes[:id])
 
-      if customer
-        customer.update customer_attributes.except(:new_member, :id)
-      else
-        Customer.create customer_attributes.except(:new_member)
-      end
+      customer.update customer_attributes.except(:new_member, :id)
+
+      customer.calculate_rewards!
     end
   end
 

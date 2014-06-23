@@ -27,99 +27,60 @@ describe EnrollmentFile do
   end
 
   describe '#process!' do
-    let(:uploader)    { DestinationRewards::RemoteFolder.instance }
+    let(:uploader)        { DestinationRewards::RemoteFolder.instance }
+    let(:customer)        { double(update: true, calculate_rewards!: true )}
+    let(:enrollment_file) { EnrollmentFile.new(enrollment_csv) }
 
-    before { uploader.stub(:upload!) }
-
-    context 'when a customer in the CSV does not already exist' do
-      it 'creates a new user for each line of the CSV file that was passed in to the EnrollmentFile' do
-        enrollment  = EnrollmentFile.new enrollment_csv
-
-        expect(Customer).to receive(:create).once.with  id:                      11,
-                                                        password:               'Rewards',
-                                                        buyer_id:                1,
-                                                        first_name:             'John',
-                                                        middle_name:            'Joseph',
-                                                        last_name:              'Doe',
-                                                        street:                 '123 Test St.',
-                                                        city:                   'Cranston',
-                                                        state:                  'Rhode Island',
-                                                        zip_code:                12920,
-                                                        phone_number:            4015781958,
-                                                        email_address:          'john@example.com',
-                                                        program_id:              111,
-                                                        balance:                 100,
-                                                        gold_member:             1
-
-        expect(Customer).to receive(:create).once.with  id:                      22,
-                                                        password:               'Rewards',
-                                                        buyer_id:                2,
-                                                        first_name:             'Jane',
-                                                        middle_name:            'Mary',
-                                                        last_name:              'Doe',
-                                                        street:                 '125 Test Ave.',
-                                                        city:                   'Warwick',
-                                                        state:                  'Rhode Island',
-                                                        zip_code:                12886,
-                                                        phone_number:            4019460376,
-                                                        email_address:          'jane@example.com',
-                                                        program_id:              111,
-                                                        balance:                 75,
-                                                        gold_member:             0
-
-        enrollment.process!
-      end
+    before do
+      uploader.stub(:upload!)
+      Customer.stub(:find_or_create_by).and_return customer
     end
 
-    context 'when a customer in the CSV already exists' do
-      let!(:customer) { Customer.create id:            22,
-                                        first_name:   'Mary',
-                                        middle_name:  'Jane',
-                                        last_name:    'Doe',
-                                        balance:       50,
-                                        gold_member:   false }
+    it "either finds or creates a new customer based on the customer's id" do
+      expect(Customer).to receive(:find_or_create_by).once.with(id: 11).and_return customer
+      expect(Customer).to receive(:find_or_create_by).once.with(id: 22).and_return customer
 
-      before do
-        Customer.stub(:where).and_return double(first: nil)
-        Customer.stub(:where).with(id: 22).and_return double(first: customer)
-      end
+      enrollment_file.process!
+    end
 
-      it 'updates the existing customer with any new information' do
-        enrollment  = EnrollmentFile.new enrollment_csv
+    it 'updates the customer with the customer attributes, except the id and new_member statues' do
+      expect(customer).to receive(:update).once.with  password:               'Rewards',
+                                                      buyer_id:                1,
+                                                      first_name:             'John',
+                                                      middle_name:            'Joseph',
+                                                      last_name:              'Doe',
+                                                      street:                 '123 Test St.',
+                                                      city:                   'Cranston',
+                                                      state:                  'Rhode Island',
+                                                      zip_code:                12920,
+                                                      phone_number:            4015781958,
+                                                      email_address:          'john@example.com',
+                                                      program_id:              111,
+                                                      balance:                 100,
+                                                      gold_member:             1
 
-        expect(Customer).to receive(:create).with id:              11,
-                                                  password:       'Rewards',
-                                                  buyer_id:        1,
-                                                  first_name:     'John',
-                                                  middle_name:    'Joseph',
-                                                  last_name:      'Doe',
-                                                  street:         '123 Test St.',
-                                                  city:           'Cranston',
-                                                  state:          'Rhode Island',
-                                                  zip_code:       12920,
-                                                  phone_number:   4015781958,
-                                                  email_address: 'john@example.com',
-                                                  program_id:     111,
-                                                  balance:        100,
-                                                  gold_member:    1
+      expect(customer).to receive(:update).once.with  password:      'Rewards',
+                                                      buyer_id:       2,
+                                                      first_name:    'Jane',
+                                                      middle_name:   'Mary',
+                                                      last_name:     'Doe',
+                                                      street:        '125 Test Ave.',
+                                                      city:          'Warwick',
+                                                      state:         'Rhode Island',
+                                                      zip_code:       12886,
+                                                      phone_number:   4019460376,
+                                                      email_address: 'jane@example.com',
+                                                      program_id:     111,
+                                                      balance:        75,
+                                                      gold_member:    0
 
-        expect(customer).to receive(:update).with password:      'Rewards',
-                                                  buyer_id:       2,
-                                                  first_name:    'Jane',
-                                                  middle_name:   'Mary',
-                                                  last_name:     'Doe',
-                                                  street:        '125 Test Ave.',
-                                                  city:          'Warwick',
-                                                  state:         'Rhode Island',
-                                                  zip_code:       12886,
-                                                  phone_number:   4019460376,
-                                                  email_address: 'jane@example.com',
-                                                  program_id:     111,
-                                                  balance:        75,
-                                                  gold_member:    0
+      enrollment_file.process!
+    end
 
-        enrollment.process!
-      end
+    it 'calculates the rewards for the customer' do
+      expect(customer).to receive(:calculate_rewards!)
+
+      enrollment_file.process!
     end
 
     it 'uploads the file to Destination Rewards SFTP folder' do
