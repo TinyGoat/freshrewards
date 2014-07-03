@@ -30,6 +30,10 @@ RSpec.configure do |config|
   config.include ControllerHelpers,   type: :controller
 
   config.before(:suite) do
+    ENV['DR_SFTP_HOST']      = 'example.com'
+    ENV['DR_SFTP_USERNAME']  = 'username'
+    ENV['DR_SFTP_PASSWORD']  = 'password'
+
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end

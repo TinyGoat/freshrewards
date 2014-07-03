@@ -51,6 +51,12 @@ gem 'foundation-rails',       '~> 5.2.2'
 # Addressable is an easy way to encode URLs
 gem 'addressable',            '~> 2.3.6'
 
+# Net::SFTP is a pure Ruby implementation of SFTP
+gem 'net-sftp',               '~> 2.1.2'
+
+# Paranoia for deactivating customers without removing them from the database
+gem 'paranoia',               '~> 2.0.2'
+
 group :development do
   #Don't show me the log message from the asset pipeline in development
   gem 'quiet_assets',               '~> 1.0.2'

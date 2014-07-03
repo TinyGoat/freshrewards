@@ -59,6 +59,12 @@ describe Transaction do
 
         transaction.process!
       end
+
+      it 'calculates the rewards for the customer' do
+        expect(customer).to receive(:calculate_rewards!)
+
+        transaction.process!
+      end
     end
 
     context 'when the deposit amount is -1' do

@@ -43,8 +43,8 @@ feature 'Administrator imports transaction file', %q{
   end
 
   def confirm_customer_balances_were_updated
-    expect(Customer.find(1).balance).to eql 115
-    expect(Customer.find(2).balance).to eql 225
+    expect(Customer.find(1).balance).to eql 15
+    expect(Customer.find(2).balance).to eql 25
   end
 
   def confirm_error_page_rendered

@@ -1,4 +1,9 @@
 class Customer < ActiveRecord::Base
+  acts_as_paranoid column: :deactivated_at
+
+  alias :deactivated? :destroyed?
+  alias :deactivate!  :destroy!
+  alias :activate!    :restore!
 
   def deposit!(amount)
     if amount > 0
@@ -6,6 +11,14 @@ class Customer < ActiveRecord::Base
     else
       raise DepositMustBeGreaterThanZero.new(amount)
     end
+  end
+
+  def calculate_rewards!
+    number_of_rewards_earned = balance/reward_threshold
+
+    number_of_rewards_earned.times { reward_earned! }
+
+    update_attribute(:balance, balance%reward_threshold)
   end
 
   def reward_earned!
@@ -29,6 +42,12 @@ class Customer < ActiveRecord::Base
       zip:        zip_code,
       email:      email_address
     }
+  end
+
+  private
+
+  def reward_threshold
+    gold_member? ? 25 : 50
   end
 
   class DepositMustBeGreaterThanZero < StandardError

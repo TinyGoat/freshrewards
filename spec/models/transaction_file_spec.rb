@@ -28,6 +28,9 @@ describe TransactionFile do
 
   describe '#process!' do
     let(:transaction_file) { TransactionFile.new(transaction_csv) }
+    let(:uploader)    { DestinationRewards::RemoteFolder.instance }
+
+    before { uploader.stub(:upload!) }
 
     it 'creates a new Transaction for each line of the TransactionFile' do
       Transaction.stub(:process!)
@@ -73,6 +76,30 @@ describe TransactionFile do
 
         expect(transaction_file.failed_transactions.size).to eql 2
       end
+    end
+
+    it 'uploads the file to Destination Rewards SFTP folder' do
+
+      Date.stub(:today).and_return Date.new(2014,05,14)
+
+      expect(uploader).to receive(:upload!).with transaction_file.send(:as_upload),
+                                                 '/Weis_Transaction_05142014.csv'
+
+      transaction_file.process!
+    end
+  end
+
+  describe '#as_upload' do
+    let(:transaction_file) { TransactionFile.new(transaction_csv) }
+
+    it 'converts the headers to camelcase' do
+      expect(transaction_file.send(:as_upload).read.headers).to include("BuyerID", "ProgramID",
+                                                                        "UserID", "RewardsCash",
+                                                                        "TXN Description")
+    end
+
+    it 'returns the new CSV file' do
+      expect(transaction_file.send(:as_upload)).to be_an_instance_of CSV
     end
   end
 
