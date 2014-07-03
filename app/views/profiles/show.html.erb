@@ -1,16 +1,16 @@
 <div class="large-6 medium-6 small-12 columns bordered">
-  <h1 class="pod-header">My<span class="red">Reward</span>Bucks</h1>
+  <h1 class="pod-header"><span class="red">Weis</span>Bucks</h1>
   <dl id="has-rewards">
     <dt class="bucks-count"><%= @profile.current_reward_progress%></dt>
     <dd class="is-subhead"><%= @profile.amount_remaining_for_current_reward %> to go!</dd>
-    <dd class="is-fineprint">15% on the Dollar for Rewards Bucks
-      (i.e. $50 = $7.50 in Gold Card Rewards Bucks).
+    <dd class="is-fineprint">15% on the Dollar for Weis Bucks
+      (i.e. $50 = $7.50 in Weis Bucks).
       75 Bucks needed to redeem rewards. Learn More &#187;
     </dd>
 </div>
 
 <div class="large-6 medium-6 small-12 columns bordered">
-  <h1 class="pod-header"><span class="red">Rewards</span>Available</h1>
+  <h1 class="pod-header"><span class="red">WeisBucks</span>Available</h1>
 
   <%= link_to destination_rewards_path, class:"button redeem red" do %>
     <h2>Redeem Now</h2>
@@ -23,7 +23,7 @@
 </div>
 
 <div class="large-6 medium-6 small-12 columns bordered" id='profile'>
-  <h1 class="pod-header">My<span class="red">Account</span></h1>
+  <h1 class="pod-header">My<span class="red">AccountInfo</span></h1>
   <table class="generic">
     <tr>
       <td>Name</td>
@@ -49,8 +49,8 @@
 </div>
 
 <div class="large-6 medium-6 small-12 columns bordered">
-  <h1 class="pod-header">My<span class="red">Rewards</span>Earned</h1>
-  <p>This is an archive of times you have reached 75 bucks.</p>
+  <h1 class="pod-header"><span class="red">WeisBucks</span>Earned</h1>
+  <p>This archive shows when qualifying WeisBucks were deposited into your account.</p>
   <ul class="archive">
     <%- @profile.rewards.each do |reward| %>
       <li><%= reward %></li>
