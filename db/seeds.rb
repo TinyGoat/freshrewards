@@ -1,5 +1,6 @@
 Customer.create password:       'Rewards',
-                buyer_id:        1,
+                buyer_id:        100,
+                id:              100,
                 first_name:     'John',
                 middle_name:    'Joseph',
                 last_name:      'Doe',

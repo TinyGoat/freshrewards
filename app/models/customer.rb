@@ -18,7 +18,8 @@ class Customer < ActiveRecord::Base
 
     number_of_rewards_earned.times { reward_earned! }
 
-    update_attribute(:balance, balance%reward_threshold)
+    update_attributes(balance:                balance%reward_threshold,
+                      rewards_to_be_uploaded: number_of_rewards_earned)
   end
 
   def reward_earned!
@@ -27,6 +28,14 @@ class Customer < ActiveRecord::Base
     rewards_will_change!
 
     update_attributes rewards: rewards.push(Date.today)
+  end
+
+  def upload_rewards!
+    total_direct_rewards_bucks = rewards_to_be_uploaded * direct_rewards_bucks
+
+    update_attribute(:rewards_to_be_uploaded, 0)
+
+    total_direct_rewards_bucks
   end
 
   def destination_rewards_link_params
@@ -44,11 +53,15 @@ class Customer < ActiveRecord::Base
     }
   end
 
-  private
-
   def reward_threshold
-    gold_member? ? 25 : 50
+    250
   end
+
+  def direct_rewards_bucks
+    gold_member? ? 50 : 25
+  end
+
+  private
 
   class DepositMustBeGreaterThanZero < StandardError
     def initialize(amount)

@@ -58,6 +58,8 @@ class EnrollmentFile
 
   def process_customers_in_file
     customers_attributes.each do |customer_attributes|
+      next if customer_attributes.empty?
+
       customer = Customer.find_or_create_by(id: customer_attributes[:id])
 
       customer.update customer_attributes.except(:new_member, :id)
@@ -67,7 +69,7 @@ class EnrollmentFile
   end
 
   def upload_file_to_destination_rewards
-    remote_folder.upload!(as_upload, upload_path)
+    remote_folder.upload(as_upload, "/weis/#{upload_path}")
   end
 
   def remote_folder
@@ -75,17 +77,38 @@ class EnrollmentFile
   end
 
   def as_upload
-    upload_csv = @csv_file
+    @upload_file ||= begin
+                      upload_csv = @csv_file
 
-    upload_csv.delete(:gold_member)
-    upload_csv.delete(:new_member)
+                      upload_csv.delete(:gold_member)
+                      upload_csv.delete(:new_member)
 
-    @upload_csv ||= CSV.new(upload_csv.to_csv, headers: true,
-                                               header_converters: :enrollment_upload_header)
+                      upload_csv = CSV.new(upload_csv.to_csv, headers:           true,
+                                                              header_converters: :enrollment_upload_header)
+                      csv = upload_csv.read()
+
+                      upload_file = Tempfile.new(upload_path)
+
+                      upload_file.write(csv.headers().join(',') + "\n")
+
+                      csv.each do |row|
+                        next if row.empty?
+
+                        customer = Customer.find(row['UserID'])
+
+                        row['InitialDCash'] = customer.upload_rewards!
+
+                        upload_file.write(row.to_s)
+                      end
+
+                      upload_file.rewind
+
+                      upload_file
+                     end
   end
 
   def upload_path
-    "/Weis_Enrollment_#{Date.today.strftime('%m%d%Y')}.csv"
+    "Weis_Enrollment_#{Date.today.strftime('%m%d%Y')}.csv"
   end
 
   def customers_attributes

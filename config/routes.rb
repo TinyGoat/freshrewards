@@ -4,7 +4,7 @@ FreshRewards::Application.routes.draw do
   get "home/learn_more"
   get "home/customer_service"
 
-  resource :profile, only: :show
+  resources :profiles, only: :show
 
   namespace :admin do
     resource :enrollment,   only: [:new, :create]

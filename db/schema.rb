@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724014045) do
+ActiveRecord::Schema.define(version: 20140724045909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,9 @@ ActiveRecord::Schema.define(version: 20140724014045) do
     t.boolean  "gold_member"
     t.integer  "program_id"
     t.integer  "buyer_id"
-    t.date     "rewards",        default: [], array: true
+    t.date     "rewards",                default: [], array: true
     t.datetime "deactivated_at"
+    t.integer  "rewards_to_be_uploaded"
   end
 
   add_index "customers", ["deactivated_at"], name: "index_customers_on_deactivated_at", using: :btree

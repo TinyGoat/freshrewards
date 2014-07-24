@@ -9,7 +9,11 @@ class Profile
   end
 
   def amount_remaining_for_current_reward
-    75 - current_reward_progress
+    reward_threshold - current_reward_progress
+  end
+
+  def reward_threshold
+    @customer.reward_threshold
   end
 
   def rewards_count

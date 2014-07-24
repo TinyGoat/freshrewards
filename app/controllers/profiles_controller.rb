@@ -1,8 +1,9 @@
 class ProfilesController < ApplicationController
 
   def show
+    customer = Customer.find(params[:id])
 
-    @profile = Profile.new(current_customer)
+    @profile = Profile.new(customer)
 
     render :show
   end
