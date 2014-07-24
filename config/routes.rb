@@ -4,8 +4,6 @@ FreshRewards::Application.routes.draw do
   get "home/learn_more"
   get "home/customer_service"
 
-  devise_for :users
-
   resource :profile, only: :show
 
   namespace :admin do
@@ -13,9 +11,8 @@ FreshRewards::Application.routes.draw do
     resource :transaction,  only: [:new, :create]
   end
 
-
   resources :inquiries, :only => [:new, :create] do
     get 'thank_you', :on => :collection
   end
-
 end
+
