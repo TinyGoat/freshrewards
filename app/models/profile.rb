@@ -4,6 +4,8 @@ class Profile
     @customer = customer
   end
 
+  attr_reader :customer
+
   def current_reward_progress
     @customer.balance
   end
@@ -24,6 +26,10 @@ class Profile
     [@customer.first_name, @customer.last_name].join(' ')
   end
 
+  def first_name
+    @customer.first_name
+  end
+
   def street
     @customer.street
   end
@@ -42,6 +48,10 @@ class Profile
 
   def rewards
     @customer.rewards.map { |date| date.strftime('%B %d, %Y') }
+  end
+
+  def member_status
+    @customer.gold_member? ? 'Gold' : 'Silver'
   end
 
   private

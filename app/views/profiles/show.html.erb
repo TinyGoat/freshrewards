@@ -12,12 +12,12 @@
 <div class="large-6 medium-6 small-12 columns bordered">
   <h1 class="pod-header"><span class="red">WeisBucks</span>Available</h1>
 
-  <%= link_to destination_rewards_path, class:"button redeem red" do %>
+  <%= link_to destination_rewards_path(@profile), class:"button redeem red" do %>
     <h2>Redeem Now</h2>
     <h4>You have <%= @profile.rewards_count %> rewards available.</h4>
   <% end %>
 
-  <%= link_to destination_rewards_path, class:"button redeem black" do %>
+  <%= link_to destination_rewards_path(@profile), class:"button redeem black" do %>
     <h4>View Rewards Catalog</h4>
   <% end %>
 </div>

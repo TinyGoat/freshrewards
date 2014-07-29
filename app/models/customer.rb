@@ -53,6 +53,11 @@ class Customer < ActiveRecord::Base
     }
   end
 
+  def member_status
+    binding.pry
+    gold_member? ? 'Gold' : 'Silver'
+  end
+
   def reward_threshold
     250
   end

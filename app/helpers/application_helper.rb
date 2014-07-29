@@ -13,7 +13,7 @@ module ApplicationHelper
     flash_messages.html_safe
   end
 
-  def destination_rewards_path
-    DestinationRewardsLink.new(current_customer).as_url
+  def destination_rewards_path(profile)
+    DestinationRewardsLink.new(profile.customer).as_url
   end
 end
