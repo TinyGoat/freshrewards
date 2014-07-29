@@ -83,13 +83,11 @@ class EnrollmentFile
                       upload_csv.delete(:gold_member)
                       upload_csv.delete(:new_member)
 
-                      upload_csv = CSV.new(upload_csv.to_csv, headers:           true,
+                      upload_csv = CSV.new(upload_csv.to_csv, headers:            true,
                                                               header_converters: :enrollment_upload_header)
                       csv = upload_csv.read()
 
                       upload_file = Tempfile.new(upload_path)
-
-                      upload_file.write(csv.headers().join(',') + "\n")
 
                       csv.each do |row|
                         next if row.empty?
@@ -98,7 +96,7 @@ class EnrollmentFile
 
                         row['InitialDCash'] = customer.upload_rewards!
 
-                        upload_file.write(row.to_s)
+                        upload_file.write(row.to_s.gsub(',','|'))
                       end
 
                       upload_file.rewind

@@ -81,14 +81,12 @@ class TransactionFile
     @upload_file ||= begin
                       upload_csv = @csv_file
 
-                      upload_csv = CSV.new(upload_csv.to_csv, headers: true,
-                                                                header_converters: :transaction_upload_header)
+                      upload_csv = CSV.new(upload_csv.to_csv, headers:            true,
+                                                              header_converters: :transaction_upload_header)
 
                       csv = upload_csv.read()
 
                       upload_file = Tempfile.new(upload_path)
-
-                      upload_file.write(csv.headers().join(',') + "\n")
 
                       csv.each do |row|
                         next if row.empty?
@@ -97,7 +95,7 @@ class TransactionFile
 
                         row['RewardsCash'] = customer.upload_rewards!
 
-                        upload_file.write(row.to_s)
+                        upload_file.write(row.to_s.gsub(',','|'))
                       end
 
                       upload_file.rewind
