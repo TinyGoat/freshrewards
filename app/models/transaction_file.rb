@@ -70,7 +70,7 @@ class TransactionFile
   end
 
   def upload_file_to_destination_rewards
-    remote_folder.upload(as_upload, "/weis/#{upload_path}")
+    remote_folder.upload(as_upload, "#{upload_path}")
   end
 
   def remote_folder
