@@ -1,4 +1,4 @@
-class Admin::EnrollmentsController < ApplicationController
+class Admin::EnrollmentsController < Admin::BaseController
   layout 'admin'
 
   def new
