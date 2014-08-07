@@ -29,6 +29,8 @@ CSV::HeaderConverters[:enrollment_upload_header] = lambda do |header|
     'Email'
   when 'program_id'
     'ProgramID'
+  when 'buyer_id'
+    'BuyerID'
   else
     header.camelize
   end
@@ -92,6 +94,8 @@ class EnrollmentFile
                         customer = Customer.find(row['UserID'])
 
                         row['InitialDCash'] = customer.upload_rewards!
+                        row['BuyerID']      = ENV['DR_BUYER_ID']
+                        row['ProgramID']    = ENV['DR_PROGRAM_ID']
 
                         upload_file.write(row.to_s.gsub(',','|'))
                       end

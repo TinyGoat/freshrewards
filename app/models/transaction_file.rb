@@ -94,6 +94,8 @@ class TransactionFile
                         customer = Customer.find(row['UserID'])
 
                         row['RewardsCash'] = customer.upload_rewards!
+                        row['BuyerID']     = ENV['DR_BUYER_ID']
+                        row['ProgramID']   = ENV['DR_PROGRAM_ID']
 
                         upload_file.write(row.to_s.gsub(',','|'))
                       end

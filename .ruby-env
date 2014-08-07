@@ -2,4 +2,6 @@ DR_LOGIN_SECRET=weismarkets
 DR_SFTP_HOST=partnerftp.destinationrewards.com
 DR_SFTP_USERNAME=weis
 DR_SFTP_PASSWORD=dec3eptiOn
+DR_BUYER_ID=619
+DR_PROGRAM_ID=9398
 
