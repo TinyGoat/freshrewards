@@ -105,7 +105,7 @@ class TransactionFile
   end
 
   def upload_path
-    "Weis_Transaction_#{Date.today.strftime('%m%d%Y')}.csv"
+    "Weis_Loyalty_#{Date.today.strftime('%m%d%Y')}.csv"
   end
 
   def transactions_data
