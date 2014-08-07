@@ -17,7 +17,12 @@
 <footer>
   <div class="row">
     <p class="centered">
-      Home  |  Redeem Now  |  FAQ  |  Contact Us  |  Customer Service  |  Back to MyWeis Account
+      <%= link_to 'Home', profile_path(current_profile.id) %>  |
+      <%= link_to 'Redeem Now', destination_rewards_path(current_profile) %>  |
+      <%= link_to 'FAQ', home_faqs_path %> |
+      <%= link_to 'Contact Us', home_contact_us_path %>  |
+      <%= link_to 'Customer Service', home_customer_service_path %> |
+      <%= link_to 'Back to MyWeis Account', profile_path(current_profile.id) %>
     </p>
     <p class="small centered">Copyright &copy; 2014 All Rights Reserved Consumer Loyalty Service LLC.</p>
   </div>

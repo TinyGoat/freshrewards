@@ -3,6 +3,7 @@ FreshRewards::Application.routes.draw do
   get "home/faqs"
   get "home/learn_more"
   get "home/customer_service"
+  get 'home/new', as: 'home_contact_us'
 
   resources :profiles, only: :show
 

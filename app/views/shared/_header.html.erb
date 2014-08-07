@@ -1,15 +1,15 @@
 <header id="has-logo" class="row">
   <div class="large-6 medium-6 small-6 columns">
-    <%=link_to root_path do %>
+    <%=link_to profile_path(current_profile.id) do %>
       <%=image_tag 'logo.jpg' %>
     <% end %>
   </div>
 
   <div class="large-6 medium-6 small-6 columns">
-    <% if @profile %>
+    <% if current_profile %>
       <dl class="has-login">
-        <dt>Welcome back, <%= @profile.first_name %> | <%= link_to 'Log Out', '#' %></dt>
-        <dt class="gold">Available <%= @profile.member_status %> Card Bucks: <%= @profile.current_reward_progress %></dt>
+        <dt>Welcome back, <%= current_profile.first_name %> | <%= link_to 'Log Out', '#' %></dt>
+        <dt class="gold">Available <%= current_profile.member_status %> Card Bucks: <%= current_profile.current_reward_progress %></dt>
       </dl>
     <% end %>
   </div>
@@ -17,10 +17,10 @@
 
 <header id="has-navigation" class="row">
   <ul id="is-navigation">
-    <li>Redeem Now</li>
+    <li><%= link_to 'Redeem Now', destination_rewards_path(current_profile)%></li>
     <li><%=link_to "Learn More", home_learn_more_path %></li>
     <li><%=link_to "FAQs", home_faqs_path %></li>
     <li><%=link_to "Customer Service", home_customer_service_path %></li>
-    <li>Back to MyWeis Account</li>
+    <li><%=link_to 'Back to MyWeis Account', profile_path(current_profile.id) %></li>
   </ul>
 </header>

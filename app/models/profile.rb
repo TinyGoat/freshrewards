@@ -5,6 +5,7 @@ class Profile
   end
 
   attr_reader :customer
+  delegate :id, to: :customer
 
   def current_reward_progress
     @customer.balance
