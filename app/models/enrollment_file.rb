@@ -80,9 +80,6 @@ class EnrollmentFile
     @upload_file ||= begin
                       upload_csv = @csv_file
 
-                      upload_csv.delete(:gold_member)
-                      upload_csv.delete(:new_member)
-
                       upload_csv = CSV.new(upload_csv.to_csv, headers:            true,
                                                               header_converters: :enrollment_upload_header)
                       csv = upload_csv.read()
