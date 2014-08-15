@@ -54,7 +54,7 @@ class Customer < ActiveRecord::Base
   end
 
   def member_status
-    gold_member? ? 'Gold' : 'Silver'
+    gold_member? ? 'Gold' : 'Club'
   end
 
   def reward_threshold

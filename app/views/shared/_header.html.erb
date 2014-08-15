@@ -9,7 +9,7 @@
     <% if current_profile %>
       <dl class="has-login">
         <dt>Welcome back, <%= current_profile.first_name %> | <%= link_to 'Log Out', '#' %></dt>
-        <dt class="gold">Available <%= current_profile.member_status %> Card Bucks: <%= current_profile.current_reward_progress %></dt>
+        <dt class="red">Available <%= current_profile.member_status %> Card Bucks: <%= current_profile.current_reward_progress %></dt>
       </dl>
     <% end %>
   </div>

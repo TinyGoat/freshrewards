@@ -52,7 +52,7 @@ class Profile
   end
 
   def member_status
-    @customer.gold_member? ? 'Gold' : 'Silver'
+    @customer.gold_member? ? 'Gold' : 'Club'
   end
 
   private
