@@ -1,4 +1,5 @@
 DR_LOGIN_SECRET=weismarkets
+FR_LOGIN_SECRET=dec3eptiOn
 DR_SFTP_HOST=partnerftp.destinationrewards.com
 DR_SFTP_USERNAME=weis
 DR_SFTP_PASSWORD=dec3eptiOn

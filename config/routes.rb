@@ -1,4 +1,5 @@
 FreshRewards::Application.routes.draw do
+  devise_for :customers
   root "profiles#show"
   get "home/faqs"
   get "home/learn_more"
