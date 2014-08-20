@@ -28,7 +28,7 @@ class Transaction
 
   def customer
     @customer ||= begin
-                    Customer.find(@transaction_attributes[:user_id])
+                    Customer.find_by_weis_id(@transaction_attributes[:user_id])
                   rescue ActiveRecord::RecordNotFound
                     raise CustomerNotFound
                   end
