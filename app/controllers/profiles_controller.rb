@@ -1,10 +1,14 @@
 class ProfilesController < ApplicationController
 
   def show
-    customer = Customer.find(params[:id])
+    if current_customer
+      customer = Customer.find(params[:id])
 
-    @profile = Profile.new(customer)
+      @profile = Profile.new(customer)
 
-    render :show
+      render :show
+    else
+      redirect_to 'https://www.weismarkets.com'
+    end
   end
 end

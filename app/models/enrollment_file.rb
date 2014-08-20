@@ -7,7 +7,7 @@ CSV::HeaderConverters[:enrollment_header] = lambda do |header|
   when 'Gcstatus'
     :gold_member
   when 'UserID'
-     :id
+     :weis_id
   when 'Address'
     :street
   when 'Email'
@@ -21,7 +21,7 @@ CSV::HeaderConverters[:enrollment_upload_header] = lambda do |header|
   case header
   when 'balance'
     'InitialDCash'
-  when 'id'
+  when 'weis_id'
      'UserID'
   when 'street'
     'Address'
@@ -62,9 +62,9 @@ class EnrollmentFile
     customers_attributes.each do |customer_attributes|
       next if customer_attributes.empty?
 
-      customer = Customer.find_or_create_by(id: customer_attributes[:id])
+      customer = Customer.find_or_create_by(weis_id: customer_attributes[:weis_id])
 
-      customer.update customer_attributes.except(:new_member, :id)
+      customer.update customer_attributes.except(:new_member, :weis_id)
 
       customer.calculate_rewards!
     end
@@ -91,7 +91,7 @@ class EnrollmentFile
                       csv.each do |row|
                         next if row.empty?
 
-                        customer = Customer.find(row['UserID'])
+                        customer = Customer.find_by_weis_id(row['UserID'])
 
                         row['InitialDCash'] = customer.upload_rewards!
                         row['BuyerID']      = ENV['DR_BUYER_ID']

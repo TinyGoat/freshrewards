@@ -6,6 +6,8 @@ CSV::HeaderConverters[:transaction_header] = lambda do |header|
     :deposit_amount
   when 'TXN Description'
     :description
+  when 'UserID'
+    :weis_id
   else
     header.underscore.to_sym
   end
@@ -21,7 +23,7 @@ CSV::HeaderConverters[:transaction_upload_header] = lambda do |header|
     'ProgramID'
   when 'buyer_id'
     'BuyerID'
-  when 'user_id'
+  when 'weis_id'
     'UserID'
   else
     header.camelize
@@ -91,7 +93,7 @@ class TransactionFile
                       csv.each do |row|
                         next if row.empty?
 
-                        customer = Customer.find(row['UserID'])
+                        customer = Customer.find_by_weis_id(row['UserID'])
 
                         row['RewardsCash'] = customer.upload_rewards!
                         row['BuyerID']     = ENV['DR_BUYER_ID']

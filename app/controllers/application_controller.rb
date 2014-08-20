@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def current_profile
-    Profile.new(Customer.first)
+    Profile.new(current_customer)
   end
 
   helper_method :current_profile

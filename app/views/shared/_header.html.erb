@@ -8,7 +8,7 @@
   <div class="large-6 medium-6 small-6 columns">
     <% if current_profile %>
       <dl class="has-login">
-        <dt>Welcome back, <%= current_profile.first_name %> | <%= link_to 'Log Out', '#' %></dt>
+        <dt>Welcome back, <%= current_profile.first_name %> | <%= link_to 'Log Out', sign_out_path %></dt>
         <dt class="red">Available <%= current_profile.member_status %> Card Bucks: <%= current_profile.current_reward_progress %></dt>
       </dl>
     <% end %>
@@ -21,6 +21,6 @@
     <li><%=link_to "Learn More", home_learn_more_path %></li>
     <li><%=link_to "FAQs", home_faqs_path %></li>
     <li><%=link_to "Customer Service", home_customer_service_path %></li>
-    <li><%=link_to 'Back to MyWeis Account', profile_path(current_profile.id) %></li>
+    <li><%=link_to 'Back to MyWeis Account', 'http://weismarkets.com' %></li>
   </ul>
 </header>
